@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Balance des </title>
+	<title>Balance des Comptes </title>
 </head>
 <body>
 

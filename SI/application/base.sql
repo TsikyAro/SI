@@ -4,6 +4,26 @@ create database compte;
 \c compte;
 grant all privileges on database compte to compte;
 
+create table Client(
+    idClient serial primary key,
+    NomPlan varchar(50)                   
+);
+grant all privileges on Client to compte;
+
+create table fournisseur(
+    idFournisseur serial primary key,
+    NomPlan varchar(50)                   
+);
+grant all privileges on fournisseur to compte;
+
+-- anaovana affichage code journal
+create table codejournaux(
+    idCode serial primary key,
+    Code varchar(10),
+    Nom varchar(30)
+);
+
+
 create table compteprincipal(
     NumeroCompte integer,
     NomCompte varchar(20)
@@ -22,6 +42,28 @@ create table exercice(
     Fin date
 );
 grant all privileges on exercice to compte;
+
+create table devise(
+    idDevise serial primary key,
+    NomMonnaie varchar(5),
+    PrixEnAriary double precision
+);
+
+create table journal(
+    idJournal serial primary key,
+    numpiece double precision,
+    referencepiece varchar(20),
+    numcompte integer,
+    Libelle TEXT,
+    Echeance varchar(20),
+    Devise integer,
+    Parite varchar(20),
+    Quantite double precision,
+    Debit double precision,
+    Credit double precision,
+    FOREIGN KEY (Devise) REFERENCES devise(idDevise),
+    FOREIGN key (numcompte) REFERENCES comptes(NumeroCompte)
+);
 
 
 create table entreprise(
@@ -76,6 +118,17 @@ insert into comptes values(28183, 'AMORT MATER & MOB LOGT');
 insert into comptes values(32110, 'STOCK MATIERES PREMIERES');
 insert into comptes values(32120, 'PETITES FOURNITURES');
 
+
+insert into codejournaux values (default,'AC','ACHAT');
+insert into codejournaux values (default,'AN','A NOUVEAU');
+insert into codejournaux values (default,'BN','BANQUE BNI');
+insert into codejournaux values (default,'BO','BANQUE BOA');
+insert into codejournaux values (default,'CA','CAISSE');
+insert into codejournaux values (default,'OD','OPERATIONS DIVERSES');
+insert into codejournaux values (default,'VE','VENTE EXPORT');
+insert into codejournaux values (default,'VL','VENTE LOCALE');
+
+
 CREATE TABLE balance_comptes (
     NumeroCompte INTEGER,
     mvt_debit FLOAT,
@@ -97,3 +150,18 @@ INSERT into balance_comptes values(28150,0,1085400.00,0,1085400.00);
 INSERT into balance_comptes values(32120,32000.00,0,32000.00,0);
 
 select comptes.* , balance_comptes.* from comptes join balance_comptes on comptes.numerocompte = balance_comptes.numerocompte;
+
+CREATE TABLE piece(
+    numpiece INT,
+    datepiece date,
+    code VARCHAR(20),
+    reference VARCHAR(50),
+);
+CREATE table grand_livre(
+    
+    numerocompte integer,
+    debit FLOAT,
+    credit FLOAT,
+    solde FLOAT,
+
+);
