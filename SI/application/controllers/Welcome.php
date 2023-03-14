@@ -20,18 +20,10 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		// $this->load->view('welcome_message');
-		echo "hello word";
-		
-	}
-	public function log($error='' ){
-		$data = array('error' => urldecode($error));
-		$this->load->view('log_form', $data);
-	}
-	public function ins() {
-		$this->load->view('propositionReceived');
-	}
-	public function ins2() {
-		$this->load->view('propositionSend');
+		//checkUser (traitement)
+		$this->load->model('BalanceModel');
+		$retour = $this->BalanceModel->getBalance();
+		$table = array('data'=> $retour);
+		$this->load->view('balance',$table);
 	}
 }
